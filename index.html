@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malla Curricular - Medicina UDELAR</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgb(255, 255, 255);
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #14ae33;
+    }
+    .container {
+      display: flex;
+      overflow-x: auto;
+      padding: 20px;
+      gap: 20px;
+    }
+    .year {
+      min-width: 300px;
+      flex-shrink: 0;
+    }
+    .semestre {
+      background-color: #c1fdcf;
+      border: 2px solid #2eee7b;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 15px;
+    }
+    .semestre:nth-child(even) {
+      background-color: #c1fdcf;
+    }
+    .materia {
+      background-color: white;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 5px 0;
+      cursor: pointer;
+      font-weight: bold;
+      color: #00801a;
+    }
+    .materia.tachada {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+    .materia.bloqueada {
+      background-color: #e0e0e0;
+      color: gray;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Malla Curricular - Psicologia clinica</h1>
+
+  <div class="container" id="malla"></div>
+
+  <script>
+    const materias = [
+      {
+        anio: "Primero", semestres: [
+          {
+            numero: "1º semestre", materias: [
+              { id: "base_bio", nombre: "BASES BIOLÓGICAS DE LA CONDUCTA " },
+              { id: "intr_psico", nombre: "INTRODUCCIÓN A LA PSICOLOGIA" },
+              { id: "psi_so", nombre: " PSICOLOGÍA SOCIAL" },
+              { id: "est_ap", nombre: "ESTADÍSTICA APLICADA" },
+              { id: "dpc", nombre: "DESARROLLO DEL PENSAMIENTO CRÍTICO" }
+            ]
+          },
+          {
+            numero: "2º semestre", materias: [
+              { id: "npsi", nombre: "NEUROPSICOLOGÍA", previas: ["base_bio"] },
+              { id: "etc_pro", nombre: "ETICA PROFESIONAL", previas: ["dpc"] },
+              { id: "sis_psi", nombre: "SISTEMAS PSICOLÓGICOS", previas: ["intr_psico"] },
+              { id: "for_inv", nombre: "FORMACIÓN INVESTIGATIVA", previas: ["est_ap"] },
+              { id: "tic_ap", nombre: "TIC APLICADA ", previas: ["est_ap"] },
+              { id: "psi_per", nombre: "PSICOLOGÍA DE LA PERSONALIDAD", previas: ["psi_so"] }
+            ]
+          }
+        ]
+      },
+      {
+        anio: "Segundo", semestres: [
+          {
+            numero: "3º semestre", materias: [
+              { id: "psi_pat", nombre: "PSICOPATOLOGÍA", previas: ["npsi"] },
+              { id: "rea_socio", nombre: "REALIDAD SOCIOECONÓMICA", previas: ["psi_per"] },
+              { id: "psi_dij", nombre: "PSICOLOGÍA DEL DESARROLLO INFANTO JUVENIL", previas: ["psi_per"] },
+              { id: "psi_sa", nombre: "PSICOLOGÍA DE LA SALUD", previas: ["sis_psi"] },
+              { id: "inv_psi_sal", nombre: "INVESTIGACIÓN PSICOLÓGICA Y DE LA SALUD", previas: ["tic_ap"] },
+              { id: "psi_cli", nombre: "PSICOLOGÍA CLÍNICA", previas: ["etc_pro"] }
+            ]
+          },
+          {
+            numero: "4º semestre", materias: [
+              { id: "psi_das", nombre: "PSICOLOGÍA DEL DESARROLLO ADULTEZ SENECTUD", previas: ["psi_dij"] },
+              { id: "psi_in_ju", nombre: "PSICODIAGNÓSTICO INFANTO-JUVENIL", previas: ["psi_cli"] },
+              { id: "sem_psiq", nombre: "SEMIOLOGÍA PSIQUIÁTRICA", previas: ["psi_pat"] },
+              { id: "sam_in_ju", nombre: "SALUD MENTAL INFANTO-JUVENIL", previas: ["psi_sa"] },
+              { id: "ev_psi", nombre: "EVALUACIÓN PSICOLÓGICA ", previas: ["inv_psi_sal"] }
+            ]
+          }
+        ]
+      },
+      {
+        anio: "Tercero", semestres: [
+          {
+            numero: "5º semestre", materias: [
+              { id: "tec_ent_psi", nombre: "TÉCNICAS DE ENTREVISTA PSICOLÓGICA", previas: ["sem_psiq"] },
+              { id: "mo_psi", nombre: "MODELOS PSICOTERAPÉUTICOS", previas: ["psi_das"] },
+              { id: "sal_men_as", nombre: "SALUD MENTAL ADULTEZ-ASENECTUD", previas: ["sam_in_ju"] },
+              { id: "psic_ad_sen", nombre: "PSICODIAGNÓSTICO ADULTEZ-SENECTUD", previas: ["psi_in_ju"] },
+              { id: "sam_com", nombre: "SALUD MENTAL COMUNITARIA", previas: ["ev_psi"] }
+            ]
+          },
+          {
+            numero: "6º semestre", materias: [
+              { id: "ad_con_nocon", nombre: "ADICCIONES CONVENCIONALES Y NO CONVENCIONALES", previas: ["tec_ent_psi"] },
+              { id: "int_gr_fam_com", nombre: "INTERVENCIÓN GRUPAL, FAMILIAR Y COMUNITARIA", previas: ["mo_psi"] },
+              { id: "psi_sex", nombre: "PSICOSEXOLOGÍA", previas: ["sal_men_as"] },
+              { id: "per_psi", nombre: "PERITAJE PSICOLÓGICO", previas: ["sam_com"] },
+              { id: "psi_ger", nombre: "PSICOGERONTOLOGÍA", previas: ["psic_ad_sen"] }
+            ]
+          }
+        ]
+      },
+      {
+        anio: "Cuarto", semestres: [
+          {
+            numero: "7º semestre", materias: [
+              { id: "psi_enl", nombre: "PSICOLOGÍA DE ENLACE", previas: ["psi_sex"] },
+              { id: "at_psi_sit_des", nombre: "ATENCIÓN PSICOLOGICA EN SITUACION DE DESASTRES", previas: ["per_psi"] },
+              { id: "dis_met_int_curr", nombre: "DISEÑO METODOLÓGICO INTEGRACIÓN CURRICULAR", previas: ["ev_psi"] },
+              { id: "int_cri_vit", nombre: "INTERVENCIÓN EN CRISIS VITALES", previas: ["ad_con_nocon"] },
+              { id: "psi_ter_fam", nombre: "PSICOTERAPIA FAMILIAR ", previas: ["int_gr_fam_com"] },
+            ]
+          },
+          {
+            numero: "8º semestre", materias: [
+              { id: "psi_farm", nombre: "PSICOFARMACOLOGÍA", previas: ["int_cri_vit"] },
+              { id: "vin_soc", nombre: "VINCULACIÓN CON LA SOCIEDAD", previas: ["dis_met_int_curr"] },
+              { id: "int_prac_lab", nombre: "INTERVENCIÓN PRÁCTICA LABORAL", previas: ["psi_ter_fam", "at_psi_sit_des", "psi_enl", "dis_met_int_curr"] },
+              { id: "int_curr", nombre: "INTEGRACIÓN CURRICULAR (REDACCÓN CIENTÍFICA)", previas: ["dis_met_int_curr"] }
+            ]
+          }
+        ]
+      },
+    ];
+
+    const estadoMaterias = JSON.parse(localStorage.getItem("estadoMaterias") || "{}");
+
+    function crearMalla() {
+      const contenedor = document.getElementById("malla");
+      contenedor.innerHTML = "";
+
+      materias.forEach(anio => {
+        const divAnio = document.createElement("div");
+        divAnio.className = "year";
+
+        const h2 = document.createElement("h2");
+        h2.textContent = anio.anio;
+        divAnio.appendChild(h2);
+
+        anio.semestres.forEach(sem => {
+          const divSem = document.createElement("div");
+          divSem.className = "semestre";
+
+          const h3 = document.createElement("h3");
+          h3.textContent = sem.numero;
+          divSem.appendChild(h3);
+
+          sem.materias.forEach(materia => {
+            const divMat = document.createElement("div");
+            divMat.textContent = materia.nombre;
+            divMat.className = "materia";
+            divMat.dataset.id = materia.id;
+
+            if (estadoMaterias[materia.id]) {
+              divMat.classList.add("tachada");
+            }
+
+            // Verifica si cumple previas
+            if (materia.previas && materia.previas.some(p => !estadoMaterias[p])) {
+              divMat.classList.add("bloqueada");
+            }
+
+            divMat.addEventListener("click", () => {
+              if (divMat.classList.contains("bloqueada")) return;
+              divMat.classList.toggle("tachada");
+              estadoMaterias[materia.id] = divMat.classList.contains("tachada");
+              localStorage.setItem("estadoMaterias", JSON.stringify(estadoMaterias));
+              crearMalla(); // Volver a renderizar para actualizar dependencias
+            });
+
+            divSem.appendChild(divMat);
+          });
+
+          divAnio.appendChild(divSem);
+        });
+
+        contenedor.appendChild(divAnio);
+      });
+    }
+
+    crearMalla();
+  </script>
+
+</body>
+</html>
